@@ -188,34 +188,13 @@ export default function MinimalDashboard() {
         <Stack spacing={2} margin={2}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Card>
-                <Box padding={2} flexGrow={1}>
-                  <Typography variant='h6'>Total Active Users</Typography>
-                  <Stack direction='row' spacing={2}>
-                    <Box
-                      sx={{
-                        width: '24px',
-                        height: '24px',
-                        display: 'flex',
-                        borderRadius: '50%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: theme.palette.success.main,
-                        backgroundColor: `${theme.palette.success.main}16`,
-                      }}
-                    >
-                      <TrendingUpIcon fontSize='small' />
-                    </Box>
-                    <Typography variant='subtitle2'>+2.6%</Typography>
-                  </Stack>
-                  <Typography variant='h3'>18,765</Typography>
-                </Box>
-                <Box display='flex' alignItems='center' justifyContent='center'>
-                  <BarChart width={60} height={40} data={data}>
-                    <Bar dataKey='uv' fill={theme.palette.success.main} />
-                  </BarChart>
-                </Box>
-              </Card>
+              <BarChartCard
+                title='Total Active Users'
+                color={theme.palette.success.main}
+                data={activeUserData}
+                mainData={'18,765'}
+                trend={2.6}
+              />
             </Grid>
             <Grid item xs={4}>
               <Card>Card2</Card>
@@ -265,7 +244,63 @@ function BasicList() {
   );
 }
 
-const data = [
+interface BarChartCardProps {
+  title: string;
+  color: string;
+  data: any[];
+  mainData: string;
+  trend: number;
+}
+
+const BarChartCard = ({ title, color, data, trend, mainData }: BarChartCardProps) => {
+  return (
+    <Card>
+      <Box padding={2} flexGrow={1}>
+        <Typography
+          variant='h6'
+          sx={{
+            margin: '0px',
+            fontWeight: 600,
+            lineHeight: 1.57143,
+            fontSize: '0.875rem',
+          }}
+        >
+          {title}
+        </Typography>
+        <Stack direction='row' spacing={2} mt={2} mb={1}>
+          <Box
+            sx={{
+              width: '24px',
+              height: '24px',
+              display: 'flex',
+              borderRadius: '50%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color,
+              backgroundColor: `${color}16`,
+            }}
+          >
+            <TrendingUpIcon fontSize='small' />
+          </Box>
+          <Typography variant='subtitle2'>+{trend}%</Typography>
+        </Stack>
+        <Typography
+          variant='h3'
+          sx={{ fontSize: '1.875rem', margin: '0px', fontWeight: '700', lineHeight: 1.5 }}
+        >
+          {mainData}
+        </Typography>
+      </Box>
+      <Box display='flex' alignItems='center' justifyContent='center'>
+        <BarChart width={60} height={40} data={data}>
+          <Bar dataKey='uv' fill={color} />
+        </BarChart>
+      </Box>
+    </Card>
+  );
+};
+
+const activeUserData = [
   {
     name: 'Page A',
     uv: 4000,
