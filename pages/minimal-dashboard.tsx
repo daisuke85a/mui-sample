@@ -24,6 +24,7 @@ import {
 } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
@@ -197,10 +198,22 @@ export default function MinimalDashboard() {
               />
             </Grid>
             <Grid item xs={4}>
-              <Card>Card2</Card>
+              <BarChartCard
+                title='Total Installed'
+                color={theme.palette.primary.main}
+                data={activeUserData}
+                mainData={'4,876'}
+                trend={0.2}
+              />
             </Grid>
             <Grid item xs={4}>
-              <Card>Card3</Card>
+              <BarChartCard
+                title='Total Downloads'
+                color={theme.palette.secondary.main}
+                data={activeUserData}
+                mainData={'678'}
+                trend={-0.1}
+              />
             </Grid>
           </Grid>
         </Stack>
@@ -253,6 +266,11 @@ interface BarChartCardProps {
 }
 
 const BarChartCard = ({ title, color, data, trend, mainData }: BarChartCardProps) => {
+  const isTrendUp = (trend: number) => {
+    if (trend >= 0) return true;
+    return false;
+  };
+
   return (
     <Card>
       <Box padding={2} flexGrow={1}>
@@ -276,13 +294,21 @@ const BarChartCard = ({ title, color, data, trend, mainData }: BarChartCardProps
               borderRadius: '50%',
               alignItems: 'center',
               justifyContent: 'center',
-              color,
-              backgroundColor: `${color}16`,
+              color: (theme) =>
+                isTrendUp(trend) ? theme.palette.success.main : theme.palette.error.main,
+              backgroundColor: (theme) =>
+                isTrendUp(trend)
+                  ? `${theme.palette.success.main}16`
+                  : `${theme.palette.error.main}16`,
             }}
           >
-            <TrendingUpIcon fontSize='small' />
+            {isTrendUp(trend) && <TrendingUpIcon fontSize='small' />}
+            {!isTrendUp(trend) && <TrendingDownIcon fontSize='small' />}
           </Box>
-          <Typography variant='subtitle2'>+{trend}%</Typography>
+          <Typography variant='subtitle2'>
+            {isTrendUp(trend) && '+'}
+            {trend}%
+          </Typography>
         </Stack>
         <Typography
           variant='h3'
