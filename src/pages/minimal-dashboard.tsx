@@ -22,15 +22,13 @@ import {
   CardContent,
 } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import { green } from '@mui/material/colors';
 import { useReducer, useState } from 'react';
-import { BarChart, Bar } from 'recharts';
 import CircleChartCard from 'components/CircleChartCard';
+import BarChartCard from 'components/BarChartCard';
 
 const theme = createTheme({
   typography: {
@@ -106,8 +104,6 @@ export default function MinimalDashboard() {
       </Box>
     );
   };
-
-  const circleChartCardColors = [green[50], green[300], green[600], green[900]];
 
   return (
     <ThemeProvider theme={theme}>
@@ -233,96 +229,6 @@ export default function MinimalDashboard() {
   );
 }
 
-function BasicList() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        <nav aria-label='main mailbox folders'>
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary='inbox' />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </nav>
-      </Box>
-    </ThemeProvider>
-  );
-}
-
-interface BarChartCardProps {
-  title: string;
-  color: string;
-  data: any[];
-  mainData: string;
-  trend: number;
-}
-
-const BarChartCard = ({ title, color, data, trend, mainData }: BarChartCardProps) => {
-  const isTrendUp = (trend: number) => {
-    if (trend >= 0) return true;
-    return false;
-  };
-
-  return (
-    <Card>
-      <Box padding={2} flexGrow={1}>
-        <Typography
-          variant='h6'
-          sx={{
-            margin: '0px',
-            fontWeight: 600,
-            lineHeight: 1.57143,
-            fontSize: '0.875rem',
-          }}
-        >
-          {title}
-        </Typography>
-        <Stack direction='row' spacing={2} mt={2} mb={1}>
-          <Box
-            sx={{
-              width: '24px',
-              height: '24px',
-              display: 'flex',
-              borderRadius: '50%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: (theme) =>
-                isTrendUp(trend) ? theme.palette.success.main : theme.palette.error.main,
-              backgroundColor: (theme) =>
-                isTrendUp(trend)
-                  ? `${theme.palette.success.main}16`
-                  : `${theme.palette.error.main}16`,
-            }}
-          >
-            {isTrendUp(trend) && <TrendingUpIcon fontSize='small' />}
-            {!isTrendUp(trend) && <TrendingDownIcon fontSize='small' />}
-          </Box>
-          <Typography variant='subtitle2'>
-            {isTrendUp(trend) && '+'}
-            {trend}%
-          </Typography>
-        </Stack>
-        <Typography
-          variant='h3'
-          sx={{ fontSize: '1.875rem', margin: '0px', fontWeight: '700', lineHeight: 1.5 }}
-        >
-          {mainData}
-        </Typography>
-      </Box>
-      <Box display='flex' alignItems='center' justifyContent='center'>
-        <BarChart width={60} height={40} data={data}>
-          <Bar dataKey='uv' fill={color} />
-        </BarChart>
-      </Box>
-    </Card>
-  );
-};
-
 const activeUserData = [
   {
     name: 'Page A',
@@ -375,4 +281,4 @@ const CURRENT_DOWNLOAD_DATA = [
   { name: 'Android', value: 78343 },
 ];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const circleChartCardColors = [green[50], green[300], green[600], green[900]];
