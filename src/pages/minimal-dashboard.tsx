@@ -30,7 +30,7 @@ import Box from '@mui/material/Box';
 import { green } from '@mui/material/colors';
 import { useReducer, useState } from 'react';
 import { BarChart, Bar } from 'recharts';
-import CircleChartCard from '../components/CircleChartCard';
+import CircleChartCard from 'components/CircleChartCard';
 
 const theme = createTheme({
   typography: {
