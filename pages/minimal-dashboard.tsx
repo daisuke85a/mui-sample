@@ -26,6 +26,7 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import DraftsIcon from '@mui/icons-material/Drafts';
+import CircleIcon from '@mui/icons-material/Circle';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import { orange, indigo, green } from '@mui/material/colors';
@@ -392,6 +393,27 @@ const CircleChartCard = ({ title, data, colors }: CircleChartCardProps) => {
         </PieChart>
         {/* </ResponsiveContainer> */}
       </Box>
+      <Divider />
+      <List dense sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        {data.map((item, index) => {
+          return (
+            <ListItem key={index}>
+              <ListItemIcon>
+                <CircleIcon sx={{ color: colors[index % colors.length] }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={item.name}
+                sx={{
+                  margin: '0px',
+                  fontWeight: 600,
+                  lineHeight: 1.57143,
+                  fontSize: '0.875rem',
+                }}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
     </Card>
   );
 };
@@ -435,7 +457,7 @@ const renderActiveShape = (props) => {
         textAnchor='middle'
         fill='#333'
       >
-        {value}
+        {value.toLocaleString()}
       </text>
       <Sector
         cx={cx}
@@ -457,13 +479,9 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        dy={6}
-        textAnchor={textAnchor}
-        fill='#333'
-      >{`${payload.name} ${value}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={6} textAnchor={textAnchor} fill='#333'>{`${
+        payload.name
+      } ${value.toLocaleString()}`}</text>
       {/* <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill='#999'>
         {`(Rate ${(percent * 100).toFixed(2)}%)`}
       </text> */}
