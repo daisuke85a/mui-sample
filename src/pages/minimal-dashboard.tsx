@@ -29,6 +29,16 @@ import { green } from '@mui/material/colors';
 import { useReducer, useState } from 'react';
 import CircleChartCard from 'components/CircleChartCard';
 import BarChartCard from 'components/BarChartCard';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
 const theme = createTheme({
   typography: {
@@ -209,6 +219,70 @@ export default function MinimalDashboard() {
               />
             </Grid>
           </Grid>
+          <Grid container>
+            <Grid item xs={12}>
+              <Card>
+                <Box padding={2} flexGrow={1}>
+                  <LineChart
+                    width={1000}
+                    height={400}
+                    data={AREA_INSTALLED_DATA}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray='3' vertical={false} />
+                    <XAxis
+                      dataKey='name'
+                      axisLine={{
+                        stroke: 'transparent',
+                        strokeDasharray: '0',
+                        strokeLinecap: 'butt',
+                      }}
+                      tickLine={false}
+                      tickSize={18}
+                      tick={{ fill: '#919eab', fontWeight: 400, fontSize: '11px' }}
+                    />
+                    <YAxis
+                      axisLine={false}
+                      tickLine={false}
+                      tickSize={12}
+                      tick={{ fill: '#919eab', fontWeight: 400, fontSize: '11px' }}
+                    />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                      type='monotone'
+                      dataKey='Asia'
+                      dot={false}
+                      activeDot={{ r: 5 }}
+                      stroke='rgba(0,171,85,1)'
+                      fill='none'
+                      fillOpacity={1}
+                      strokeLinecap='round'
+                      strokeWidth={3}
+                      strokeDasharray={0}
+                    />
+                    <Line
+                      type='monotone'
+                      dataKey='America'
+                      dot={false}
+                      activeDot={{ r: 5 }}
+                      stroke='rgba(255,231,0,1)'
+                      fill='none'
+                      fillOpacity={1}
+                      strokeLinecap='round'
+                      strokeWidth={3}
+                      strokeDasharray={0}
+                    />
+                  </LineChart>
+                </Box>
+              </Card>
+            </Grid>
+          </Grid>
         </Stack>
         <Stack spacing={2} margin={2}>
           <Grid container spacing={2}>
@@ -228,6 +302,11 @@ export default function MinimalDashboard() {
     </ThemeProvider>
   );
 }
+
+const renderYTick = (props) => {
+  console.log(props);
+  return <g fontFamily={['Public Sans', 'sans-serif'].join(',')}></g>;
+};
 
 const activeUserData = [
   {
@@ -282,3 +361,51 @@ const CURRENT_DOWNLOAD_DATA = [
 ];
 
 const circleChartCardColors = [green[50], green[300], green[600], green[900]];
+
+const AREA_INSTALLED_DATA = [
+  {
+    name: 'Jan',
+    Asia: 10,
+    America: 10,
+  },
+  {
+    name: 'Feb',
+    Asia: 41,
+    America: 34,
+  },
+  {
+    name: 'Mar',
+    Asia: 35,
+    America: 13,
+  },
+  {
+    name: 'Apr',
+    Asia: 51,
+    America: 56,
+  },
+  {
+    name: 'May',
+    Asia: 49,
+    America: 77,
+  },
+  {
+    name: 'Jun',
+    Asia: 62,
+    America: 88,
+  },
+  {
+    name: 'Jul',
+    Asia: 69,
+    America: 99,
+  },
+  {
+    name: 'Aug',
+    Asia: 91,
+    America: 77,
+  },
+  {
+    name: 'Sep',
+    Asia: 148,
+    America: 45,
+  },
+];
