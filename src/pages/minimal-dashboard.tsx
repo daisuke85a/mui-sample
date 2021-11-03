@@ -221,7 +221,20 @@ export default function MinimalDashboard() {
           </Grid>
           <Grid container>
             <Grid item xs={12}>
-              <Card>
+              <Card sx={{ display: 'block' }}>
+                <Box padding={2} flexGrow={1}>
+                  <Typography
+                    variant='h6'
+                    sx={{
+                      margin: '0px',
+                      fontWeight: 600,
+                      lineHeight: 1.57143,
+                      fontSize: '0.875rem',
+                    }}
+                  >
+                    Area Installed
+                  </Typography>
+                </Box>
                 <Box padding={2} flexGrow={1}>
                   <LineChart
                     width={1000}
@@ -253,7 +266,31 @@ export default function MinimalDashboard() {
                       tick={{ fill: '#919eab', fontWeight: 400, fontSize: '11px' }}
                     />
                     <Tooltip />
-                    <Legend />
+                    <Legend
+                      verticalAlign='top'
+                      align='right'
+                      iconType='circle'
+                      iconSize={12}
+                      height={40}
+                      fontFamily={['Public Sans', 'sans-serif'].join(',')}
+                      formatter={(value: string, entry: any) => {
+                        const { color } = entry;
+
+                        return (
+                          <Box
+                            component='span'
+                            sx={{
+                              color: 'rgb(33, 43, 54)',
+                              fontSize: '13px',
+                              fontWeight: 500,
+                              fontFamily: ['Public Sans', 'sans-serif'].join(','),
+                            }}
+                          >
+                            {value}
+                          </Box>
+                        );
+                      }}
+                    />
                     <Line
                       type='monotone'
                       dataKey='Asia'
